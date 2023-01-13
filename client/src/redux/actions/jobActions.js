@@ -51,7 +51,7 @@ export const applyJobs = (job) => async (dispatch) => {
 
   dispatch({ type: "LOADING", payload: true });
   try {
-    await axios.post("/jobs/applyobs", {job, user});
+    await axios.post("/jobs/applyjobs", {job, user});
     message.success("Apply successfully");
     setTimeout(() => {
       window.location.href = "/";
