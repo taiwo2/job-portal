@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import DefaultLayout from "../components/DefaultLayout";
-import { Table } from "antd";
+import { Table, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {EditOutlined }from "@ant-design/icons";
+import { EditOutlined, OrderedListOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 const Posted = () => {
   const { jobs } = useSelector((state) => state.jobLists);
-
+  const { users } = useSelector((state) => state.users);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState();
   const userId = JSON.parse(localStorage.getItem("user"))._id;
   // console.log(userId);
   const filterjob = jobs.filter((job) => job.postedBy == userId);
-  console.log(filterjob)
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const columns = [
     {
       title: "Title",
@@ -32,37 +33,101 @@ const Posted = () => {
     },
     {
       title: "Actions",
-      render: (text,data) => {
+      render: (text, data) => {
         return (
-        <div className="d-flex">
-          <EditOutlined onClick={() => navigate(`/editjob/${data.completeData._id}`)}/>
-        </div>)
-      }
+          <div className="d-flex">
+            <EditOutlined
+              onClick={() => navigate(`/editjob/${data.completeData._id}`)}
+            />
+            <OrderedListOutlined onClick={() => showModal(data.completeData)} />
+          </div>
+        );
+      },
     },
   ];
 
   const dataSource = [];
 
-  for (let job in filterjob) {
-    // const Obj = {
-    //   title: job.title,
-    //   company: job.company,
-    //   postedOn: moment(job.createdAt).format("MMM DD YYYY"),
-    //   appliedCandidates: job.appliedCandidates.length
-    // }
+  for (let job of filterjob) {
     const Obj = {
-      title: filterjob[job].title,
-      appliedCandidates: filterjob[job].appliedCandidates.length,
-      company: filterjob[job].company,
-      postedOn: moment(filterjob[job].createdAt).format("MMM DD YYYY"),
-      completeData: filterjob[job]
+      title: job.title,
+      appliedCandidates: job.appliedCandidates.length,
+      company: job.company,
+      postedOn: moment(job.createdAt).format("MM DD YYYY"),
+      completeData: job,
     };
-
     dataSource.push(Obj);
   }
+  // for (let job in filterjob) {
+
+  //   const Obj = {
+  //     title: filterjob[job].title,
+  //     appliedCandidates: filterjob[job].appliedCandidates.length,
+  //     company: filterjob[job].company,
+  //     postedOn: moment(filterjob[job].createdAt).format("MMM DD YYYY"),
+  //     completeData: filterjob[job]
+  //   };
+
+  //   dataSource.push(Obj);
+  // }
+
+  const CandidateTable = () => {
+    const candidatesColumns = [
+      {
+        title: "candidate ID",
+        dataIndex: "candidateId",
+      },
+      {
+        title: "Full Name",
+        dataIndex: "fullName",
+      },
+      {
+        title: "Applied Date",
+        dataIndex: "appliedDate",
+      },
+    ]
+  
+    const candidateDataSource = []
+    for (let candidate of  selectedJob.appliedCandidates) {
+      const user = users.find(user => user._id  == candidate.userId)
+      const Obj = {
+        candidateId: user._id,
+        fullName: user.firstName + " " + user.lastName,
+        appliedDate: candidate.appliedDate
+      }
+    
+      candidateDataSource.push(Obj);
+    }
+    return <Table columns={candidatesColumns} dataSource={candidateDataSource}/>
+  }
+  
+
+
+  const showModal = (jobs) => {
+    setIsModalOpen(true);
+    setSelectedJob(jobs);
+  };
+
+  console.log('tai',selectedJob)
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <DefaultLayout>
       <Table columns={columns} dataSource={dataSource} />
+      <Modal
+        title="Applied Candidates List"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <CandidateTable />
+      </Modal>
     </DefaultLayout>
   );
 };

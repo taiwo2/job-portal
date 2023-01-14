@@ -20,6 +20,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Posted from "./pages/Posted";
 import EditJob from "./pages/EditJob";
+import { getallUsers } from "./redux/actions/userAction";
 
 const ProtectedRoute = () => {
   const user = localStorage.getItem("user");
@@ -38,6 +39,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getallJobs());
+    dispatch(getallUsers())
   }, []);
 
   return (
@@ -69,7 +71,7 @@ function App() {
             <Route path="/job/:id" element={<JobInfo />} />
           </Route>
           <Route path="/" element={<ProtectedRoute />}>
-            <Route path="/appiledjobs" element={<AppliedJobs />} />
+            <Route path="/appliedjobs" element={<AppliedJobs />} />
           </Route>
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="/postedjobs" element={<Posted />} />

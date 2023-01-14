@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import DefaultLayout from "../components/DefaultLayout";
-import { Button } from "antd";
+import { Button, Tag } from "antd";
 import moment from "moment";
 import { applyJobs } from "../redux/actions/jobActions";
 const JobInfo = () => {
@@ -12,6 +12,11 @@ const JobInfo = () => {
   const job = jobs.find((jb) => jb._id === id);
 
   const userId = JSON.parse(localStorage.getItem("user"))._id;
+  const appliedCandidate = job.appliedCandidates;
+
+  const alreadyApplied = appliedCandidate.find(
+    (candidate) => candidate.userId === userId
+  );
   const applyNow = () => {
     dispatch(applyJobs(job));
   };
@@ -39,12 +44,16 @@ const JobInfo = () => {
             <p> AplliedCandiddates: {job.appliedCandidates.length}</p>
             <hr />
             <div className="d-flex justify-content-between">
-              {job.postedBy == userId ? (
+              {job.postedBy === userId ? (
                 <Link to={`/editjob/${job._id}`}>
                   <Button>Edit Now</Button>
                 </Link>
+              ) : alreadyApplied ? (
+                <Tag color="green">Already applied</Tag>
               ) : (
-                <Button className="bt" onClick={applyNow}>Apply Now</Button>
+                <Button className="bt" onClick={applyNow}>
+                  Apply Now
+                </Button>
               )}
 
               <p>posted on: {moment(job.createdAt).format("MMM DD yyyy")}</p>

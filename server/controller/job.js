@@ -1,5 +1,6 @@
 import jobSchema from "../models/job.js";
 import userSchema from "../models/user.js";
+import moment from "moment";
 export const getJobs = async (req, res) => {
   try {
     const jobs = await jobSchema.find({});
@@ -39,8 +40,8 @@ export const applyJobs = async (req, res) => {
    const jobDetails = await jobSchema.findOne({_id: job._id})
 
    const appliedCandidate = {
-    userId: user_id,
-    appliedDates: moment().format('MM DD YYY')
+    userId: user._id,
+    appliedDate: moment().format('MMM DD YYYY')
    }
 
    jobDetails.appliedCandidates.push(appliedCandidate);
@@ -49,7 +50,7 @@ export const applyJobs = async (req, res) => {
    const useDetails = await userSchema.findOne({_id: user._id})
     const appliedjob = {
       jobId: job._id,
-      appliedDates: moment().format('MM DD YYY')
+      appliedDate: moment().format('MMM DD YYYY')
     }
 
     useDetails.appliedJobs.push(appliedjob);

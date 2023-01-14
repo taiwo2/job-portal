@@ -5,9 +5,11 @@ import logger from "redux-logger"
 import thunk from 'redux-thunk'
 import { jobReducers } from "./reducers/jobReducers";
 import { loaderReducer } from "./reducers/LoaderReducer";
+import { usersReducer } from "./reducers/usersReducer";
 const storeReducers = combineReducers({
   jobLists: jobReducers,
-  loader: loaderReducer
+  loader: loaderReducer,
+  users: usersReducer
 })
 
 export const middleware = [thunk,logger]

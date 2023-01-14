@@ -43,8 +43,8 @@ const DefaultLayout = ({ children }) => {
           <Menu.Item key="/profile" icon={<VideoCameraOutlined />}>
             <Link to="/profile">Profile</Link>
           </Menu.Item>
-          <Menu.Item key="/appiledjobs" icon={<UploadOutlined />}>
-            <Link to="/appiledjobs">AppliedJobs</Link>
+          <Menu.Item key="/appliedjobs" icon={<UploadOutlined />}>
+            <Link to="/appliedjobs">AppliedJobs</Link>
           </Menu.Item>
           <Menu.Item key="/postjobs" icon={<UserOutlined />}>
             <Link to="/postjobs">PostJobs</Link>

@@ -34,3 +34,13 @@ export const updateUser = async (req,res) => {
     res.status(404).json(error.message)
   }
 }
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await userSchema.find({});
+
+    res.status(201).json(users);
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+};

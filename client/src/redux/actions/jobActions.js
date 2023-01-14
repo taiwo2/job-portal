@@ -31,7 +31,6 @@ export const createJobs = (values) => async (dispatch) => {
 };
 
 export const editJobs = (values) => async (dispatch) => {
-
   dispatch({ type: "LOADING", payload: true });
   try {
     await axios.post("/jobs/editjobs", values);
@@ -47,16 +46,18 @@ export const editJobs = (values) => async (dispatch) => {
 };
 
 export const applyJobs = (job) => async (dispatch) => {
-  const user = JSON.parse(localStorage.getItem("user"))
-
   dispatch({ type: "LOADING", payload: true });
+  const user = JSON.parse(localStorage.getItem("user"));
+
   try {
-    await axios.post("/jobs/applyjobs", {job, user});
+    await axios.post("/jobs/applyjobs", { job, user });
+
+    dispatch({ type: "LOADING", payload: false });
     message.success("Apply successfully");
     setTimeout(() => {
       window.location.href = "/";
     }, 1000);
-    dispatch({ type: "LOADING", payload: false });
+    
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });

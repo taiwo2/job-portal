@@ -21,6 +21,7 @@ export const loginUser = (values) => async (dispatch) => {
     const user = await axios.post("/users/register", values);
     message.success("Login Successfully");
     localStorage.setItem("user", JSON.stringify(user.data))
+    
     setTimeout(() => {
       window.location.href = "/";
     }, 1000);
@@ -45,6 +46,19 @@ export const updateUser = (values) => async (dispatch) => {
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {
     message.error("something wrong Try a agan");
+    dispatch({ type: "LOADING", payload: false });
+  }
+};
+
+export const getallUsers = () => async (dispatch) => {
+  dispatch({ type: "LOADING", payload: true });
+  try {
+    const response = await axios.get("/users");
+    dispatch({ type: "GET_ALL_USERS", payload: response.data });
+    console.log('taia',response.data)
+    dispatch({ type: "LOADING", payload: false });
+  } catch (error) {
+    console.log(error);
     dispatch({ type: "LOADING", payload: false });
   }
 };
