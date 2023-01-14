@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { EditOutlined, OrderedListOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Posted = () => {
   const { jobs } = useSelector((state) => state.jobLists);
   const { users } = useSelector((state) => state.users);
@@ -75,7 +76,14 @@ const Posted = () => {
     const candidatesColumns = [
       {
         title: "candidate ID",
-        dataIndex: "candidateId",
+        // dataIndex: "candidateId",
+        render: (data) => {
+          return (
+            <div>
+              <Link to={`/users/${data.candidateId}`}>{data.candidateId}</Link>
+            </div>
+          );
+        }
       },
       {
         title: "Full Name",
@@ -85,30 +93,28 @@ const Posted = () => {
         title: "Applied Date",
         dataIndex: "appliedDate",
       },
-    ]
-  
-    const candidateDataSource = []
-    for (let candidate of  selectedJob.appliedCandidates) {
-      const user = users.find(user => user._id  == candidate.userId)
+    ];
+
+    const candidateDataSource = [];
+    for (let candidate of selectedJob.appliedCandidates) {
+      const user = users.find((user) => user._id == candidate.userId);
       const Obj = {
         candidateId: user._id,
         fullName: user.firstName + " " + user.lastName,
-        appliedDate: candidate.appliedDate
-      }
-    
+        appliedDate: candidate.appliedDate,
+      };
+
       candidateDataSource.push(Obj);
     }
-    return <Table columns={candidatesColumns} dataSource={candidateDataSource}/>
-  }
-  
-
+    return (
+      <Table columns={candidatesColumns} dataSource={candidateDataSource} />
+    );
+  };
 
   const showModal = (jobs) => {
     setIsModalOpen(true);
     setSelectedJob(jobs);
   };
-
-  console.log('tai',selectedJob)
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -123,8 +129,10 @@ const Posted = () => {
       <Modal
         title="Applied Candidates List"
         open={isModalOpen}
+        closable={false}
         onOk={handleOk}
         onCancel={handleCancel}
+        width={800}
       >
         <CandidateTable />
       </Modal>

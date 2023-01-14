@@ -5,14 +5,12 @@ import {
   Outlet,
   Route,
   Routes,
-  useNavigate,
 } from "react-router-dom";
 import AppliedJobs from "./pages/AppliedJobs";
 import Home from "./pages/Home";
 import JobInfo from "./pages/JobInfo";
 import PostJobs from "./pages/PostJobs";
 import Profile from "./pages/Profile";
-import { useState, CSSProperties } from "react";
 import FadeLoader from "react-spinners/ClipLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { getallJobs } from "./redux/actions/jobActions";
@@ -21,6 +19,7 @@ import Login from "./pages/Login";
 import Posted from "./pages/Posted";
 import EditJob from "./pages/EditJob";
 import { getallUsers } from "./redux/actions/userAction";
+import UserInfo from "./pages/UserInfo";
 
 const ProtectedRoute = () => {
   const user = localStorage.getItem("user");
@@ -46,13 +45,7 @@ function App() {
     <>
       {loader && (
         <div className="sweet-loading">
-          <FadeLoader
-            cssOverride={CSSProperties}
-            color={"#001529"}
-            size={150}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
+          <h1>Loading please wait</h1>
         </div>
       )}
 
@@ -81,6 +74,9 @@ function App() {
           </Route>
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="/editjob/:id" element={<EditJob />} />
+          </Route>
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route path="/users/:id" element={<UserInfo/>} />
           </Route>
         </Routes>
       </BrowserRouter>

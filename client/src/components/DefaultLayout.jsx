@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
+import Filter from "./Filter";
 
 const { Header, Sider, Content } = Layout;
 
@@ -68,6 +69,9 @@ const DefaultLayout = ({ children }) => {
             zIndex: 9999,
           }}
         >
+          <div className="d-flex justify-content-between">
+
+          <div>
           {React.createElement(
             collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
             {
@@ -75,6 +79,15 @@ const DefaultLayout = ({ children }) => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
+          </div>
+          <div>
+            <Filter />
+
+          </div>
+          <div>
+
+          </div>
+          </div>
         </Header>
         <Content
           style={{

@@ -78,3 +78,7 @@ input, .ant-input, .ant-select {
 .ant-message {
   z-index: 9999 !important;
 }
+
+.ant-btn {
+  height: 32px !important;
+}
