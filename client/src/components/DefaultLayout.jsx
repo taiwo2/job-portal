@@ -3,9 +3,15 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
+  PlusSquareOutlined,
   UserOutlined,
+  HomeOutlined,
+  PlusOutlined,
+  CheckOutlined,
+  LogoutOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 import { Layout, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
 import Filter from "./Filter";
@@ -13,6 +19,8 @@ import Filter from "./Filter";
 const { Header, Sider, Content } = Layout;
 
 const DefaultLayout = ({ children }) => {
+  const { users } = useSelector((state) => state.users);
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -38,22 +46,22 @@ const DefaultLayout = ({ children }) => {
           mode="inline"
           defaultSelectedKeys={window.location.pathname}
         >
-          <Menu.Item key="/" icon={<UserOutlined />}>
+          <Menu.Item key="/" icon={<HomeOutlined />}>
             <Link to="/">Home</Link>
           </Menu.Item>
-          <Menu.Item key="/profile" icon={<VideoCameraOutlined />}>
+          <Menu.Item key="/profile" icon={<UserOutlined/>}>
             <Link to="/profile">Profile</Link>
           </Menu.Item>
-          <Menu.Item key="/appliedjobs" icon={<UploadOutlined />}>
+          <Menu.Item key="/appliedjobs" icon={<PlusSquareOutlined />}>
             <Link to="/appliedjobs">AppliedJobs</Link>
           </Menu.Item>
-          <Menu.Item key="/postjobs" icon={<UserOutlined />}>
+          <Menu.Item key="/postjobs" icon={<PlusOutlined />}>
             <Link to="/postjobs">PostJobs</Link>
           </Menu.Item>
-          <Menu.Item key="/postedjobs" icon={<UserOutlined />}>
+          <Menu.Item key="/postedjobs" icon={<CheckOutlined />}>
             <Link to="/postedjobs">Posted</Link>
           </Menu.Item>
-          <Menu.Item key="/login" icon={<UserOutlined />}>
+          <Menu.Item key="/login" icon={<LogoutOutlined />}>
             <Link onClick={logout}>Logout</Link>
           </Menu.Item>
         </Menu>
@@ -69,7 +77,8 @@ const DefaultLayout = ({ children }) => {
             zIndex: 9999,
           }}
         >
-          <div className="d-flex justify-content-between">
+          <div className="" 
+          style={{display: "flex",justifyContent: "space-between",alignItems: "baseline"}}>
 
           <div>
           {React.createElement(
@@ -85,7 +94,9 @@ const DefaultLayout = ({ children }) => {
 
           </div>
           <div>
-
+          {users && users.map((user, index) => (
+  <p key={index}>{user.userName}</p>
+))}
           </div>
           </div>
         </Header>
