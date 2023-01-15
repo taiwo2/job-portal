@@ -11,7 +11,6 @@ import Home from "./pages/Home";
 import JobInfo from "./pages/JobInfo";
 import PostJobs from "./pages/PostJobs";
 import Profile from "./pages/Profile";
-import FadeLoader from "react-spinners/ClipLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { getallJobs } from "./redux/actions/jobActions";
 import Register from "./pages/Register";

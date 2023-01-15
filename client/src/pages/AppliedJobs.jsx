@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import { Table } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {EditOutlined }from "@ant-design/icons";
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
 const AppliedJobs = () => {
   const { jobs } = useSelector((state) => state.jobLists);

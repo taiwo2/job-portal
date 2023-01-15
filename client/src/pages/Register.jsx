@@ -3,6 +3,10 @@ import { Col, Row, Button, Form, Input, message } from "antd";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../redux/actions/userAction";
 import { Link } from "react-router-dom";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+// ..
+AOS.init();
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -19,7 +23,7 @@ const Register = () => {
     <div className="register">
       <Row justify="center" className="flex align-items-center">
         <Col lg={5}>
-          <h1 className="heading1" data-aos="slide-left">
+          <h1 className="heading1" data-aos="slide-right">
             Waliy
           </h1>
         </Col>
@@ -64,7 +68,7 @@ const Register = () => {
           </Form>
         </Col>
         <Col lg={5}>
-          <h1 className="heading2" data-aos="slide-right">
+          <h1 className="heading2" data-aos="slide-left">
             Jobs
           </h1>
         </Col>

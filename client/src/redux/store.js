@@ -1,4 +1,3 @@
-import RootReducer from "./RootReducer";
 import { combineReducers } from "redux";
 import {createStore,applyMiddleware } from "redux";
 import logger from "redux-logger"

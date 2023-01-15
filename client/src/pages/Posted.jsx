@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import { Table, Modal } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { EditOutlined, OrderedListOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -38,9 +38,14 @@ const Posted = () => {
         return (
           <div className="d-flex">
             <EditOutlined
+            className="mr-2"
+              style={{ fontSize: "20px" }}
               onClick={() => navigate(`/editjob/${data.completeData._id}`)}
             />
-            <OrderedListOutlined onClick={() => showModal(data.completeData)} />
+            <OrderedListOutlined
+              style={{ fontSize: "20px" }}
+              onClick={() => showModal(data.completeData)}
+            />
           </div>
         );
       },
@@ -83,7 +88,7 @@ const Posted = () => {
               <Link to={`/users/${data.candidateId}`}>{data.candidateId}</Link>
             </div>
           );
-        }
+        },
       },
       {
         title: "Full Name",
